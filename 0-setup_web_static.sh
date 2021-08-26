@@ -10,10 +10,10 @@ echo "<html>
   <body>
     Holberton School
   </body>
-</html>" > sudo tee /data/web_static/releases/test/index.html
+</html>" > /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -hR ubuntu:ubuntu /data/
-new_loc="\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n"
+new_loc="\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\
+\t}\n"
 sudo sed -i "37i\ $new_loc" /etc/nginx/sites-available/default
-sudo service nginx reload
-sudo service nginx restart
+sudo service nginx start
