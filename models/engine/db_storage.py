@@ -13,6 +13,10 @@ from models.place import Place
 from models.review import Review
 
 
+classes = {"BaseModel": BaseModel, "User": User, "State": State,
+           "City": City, "Amenity": Amenity, "Place": Place, "Review": Review}
+
+
 class DBStorage():
     """
     Database Engine for AirBnB project
@@ -32,23 +36,15 @@ class DBStorage():
             Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
-        """Returns dictionary with all objects depending
-        of the class name (argument cls)"""
-        if cls:
-            objs = self.__session.query(self.classes()[cls])
-        else:
-            objs = self.__session.query(State).all()
-            objs += self.__session.query(City).all()
-            objs += self.__session.query(User).all()
-            objs += self.__session.query(Place).all()
-            objs += self.__session.query(Amenity).all()
-            objs += self.__session.query(Review).all()
-
-        dic = {}
-        for obj in objs:
-            k = '{}.{}'.format(type(obj).__name__, obj.id)
-            dic[k] = obj
-        return dic
+        """query on the current database session"""
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return (new_dict)
 
     def new(self, obj):
         """Add the object to the current
