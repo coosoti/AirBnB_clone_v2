@@ -33,7 +33,6 @@ def states(state_id=None):
     return render_template('9-states.html', states=states, state_id=state_id)
 
 
-
 @app.route('/hbnb_filters', strict_slashes=False)
 def hbnb_filters():
     """display a HTML page like 6-index.html from static"""
