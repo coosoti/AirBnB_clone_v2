@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-This script that starts a Flask web application
-"""
+"""This script that starts a Flask web application"""
 
 from flask import Flask, render_template
 from models import storage
